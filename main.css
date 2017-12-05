@@ -4,7 +4,7 @@ body {
 
 canvas {
   /*background: rgb(65, 61, 61);*/
-  background-image: url('Jungle Asset Pack/Jungle tileset/jungle tileset.png');
+  background-image: url('./Jungle Asset Pack/Jungle tileset/jungle tileset.png');
   display: block;
   margin: 0 auto;
 }
