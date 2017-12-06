@@ -5,8 +5,8 @@ var gameBoard = document.getElementById("canvas"),
     width = 400,
     height = 800;
 
-var player = new Object('Jungle Asset Pack/Character/sprites/idle.gif', 100, 100); //char model + position
-var plat1 = new Object('Assets/platform1.png', 0, 750, 50, 20); // plat model + position
+var player = new Object('Jungle Asset Pack/Character/sprites/idle.gif', 100, 100, 19, 34); //char model + position
+var plat1 = new Object('Assets/platform1.png', 0, 750, 50, 20); // play model + position
 var isLeft = false; // defaults for collison
 var isRight = false; // defaults for collison
 var isSpace = false;
@@ -35,8 +35,8 @@ mainLoop();
 
 function mainLoop() {
   // Pre variable adjustments
-  player.X += player.Velocity_X; // move left
-  player.Y += player.Velocity_Y; // move right
+  player.X += player.Velocity_X; // amt move left
+  player.Y += player.Velocity_Y; // amt move right
 
   // Logic
   if (isLeft) player.Velocity_X = -3; // change in movement left
@@ -50,14 +50,15 @@ function mainLoop() {
     player.Velocity_Y = 0; // if player collides then stop
   }
 
-  // if (isSpace && player.Velocity_Y === 0) { // jumping mechanism
-  //   player.Velocity_Y = -5;
-  // }
+  if (isSpace && player.Velocity_Y === 0) { // jumping mechanism
+    player.Velocity_Y = -5;
+  }
+  
   // Post variable adjustments
 
   // Rendering
   grphix.clearRect(0, 0, gameBoard.width, gameBoard.height); // refreshs screen so graphics dont pile on
-  grphix.drawImage(player.Sprite, player.X, player.Y); // sets player to 'kinda bottom'
+  grphix.drawImage(player.Sprite, player.X, player.Y); // sets player position
   grphix.drawImage(plat1.Sprite, plat1.X, plat1.Y);
 
   setTimeout(mainLoop, 1000/60); // 60s refresh rate
