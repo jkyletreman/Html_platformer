@@ -12,6 +12,7 @@ var platXTop = new Object('Assets/platXTop.png', 0, 0, 400, 20); // top
 var platYL = new Object('Assets/platY.png', 0, 0, 20, 800); // left
 var platYR = new Object('Assets/platY.png', 380, 0, 20, 800); // right
 var platEnd = new Object('Assets/platE.png', 100, 100, 200, 20); // end platform
+var door = new Object('Assets/Door.png', 200, 50, 35, 50);
 
 // TODO clean this into a array
 var platLA = new Object('Assets/platD.png', 20, 680, 200, 20);
@@ -98,11 +99,20 @@ function mainLoop() {
     player.Y = platRC.Y - player.Height;
     player.Velocity_Y = 0; // if player collides then stop
   }
+
   // Left Wall + Right wall collision
   if (player.isColliding(platYL)) player.Velocity_X = .1;
   if (player.isColliding(platYR)) player.Velocity_X = -.1;
 
-  if (isSpace && player.Velocity_Y === 0) { // jumping mechanism
+  // End State Collision
+
+  if (player.isColliding(door)) {
+    let end = document.querySelector('endScreenArea');
+    end.className = 'popup'
+  }
+
+  // Jump
+  if (isSpace && player.Velocity_Y === 0) {
     player.Velocity_Y = -4.5;
   }
 
@@ -124,6 +134,8 @@ function mainLoop() {
   grphix.drawImage(platRB.Sprite, platRB.X, platRB.Y);
   grphix.drawImage(platLC.Sprite, platLC.X, platLC.Y);
   grphix.drawImage(platRC.Sprite, platRC.X, platRC.Y);
+  grphix.drawImage(door.Sprite, door.X, door.Y);
+
 
 
 
