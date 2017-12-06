@@ -9,10 +9,11 @@ var gameBoard = document.getElementById("canvas"),
 var player = new Object('Jungle Asset Pack/Character/sprites/idle.gif', (width / 2), 744, 19, 34); //char model + position
 var platXBot = new Object('Assets/platXBot.png', 0, 780, 400, 20); // bot plat position
 var platXTop = new Object('Assets/platXTop.png', 0, 0, 400, 20); // top
-
-// TODO clean this into a array
 var platYL = new Object('Assets/platY.png', 0, 0, 20, 800); // left
 var platYR = new Object('Assets/platY.png', 380, 0, 20, 800); // right
+var platEnd = new Object('Assets/platE.png', 100, 100, 200, 20); // end platform
+
+// TODO clean this into a array
 var platLA = new Object('Assets/platD.png', 20, 680, 200, 20);
 var platRA = new Object('Assets/platD.png', 185, 580, 200, 20);
 var platLB = new Object('Assets/platD.png', 20, 480, 200, 20);
@@ -62,6 +63,11 @@ function mainLoop() {
     player.Velocity_Y = 0; // if player collides then stop
   }
   // TODO use a loop here
+  // platEnd collision
+  if (player.isColliding(platEnd) && (player.Y + player.Height) < (platEnd.Y + player.Velocity_Y)) {
+    player.Y = platEnd.Y - player.Height;
+    player.Velocity_Y = 0; // if player collides then stop
+  }
   // platLA collision
   if (player.isColliding(platLA) && (player.Y + player.Height) < (platLA.Y + player.Velocity_Y)) {
     player.Y = platLA.Y - player.Height;
@@ -106,6 +112,7 @@ function mainLoop() {
   grphix.drawImage(player.Sprite, player.X, player.Y); // sets player position
   grphix.drawImage(platXBot.Sprite, platXBot.X, platXBot.Y); // bot platform
   grphix.drawImage(platXTop.Sprite, platXTop.X, platXTop.Y); // top platform
+  grphix.drawImage(platEnd.Sprite, platEnd.X, platEnd.Y); // top platform
 
   // TODO loop
   grphix.drawImage(platYR.Sprite, platYR.X, platYR.Y); // right wall
