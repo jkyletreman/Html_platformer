@@ -1,12 +1,26 @@
 //Variables
 
 var gameBoard = document.getElementById("canvas"),
-    grphix = canvas.getContext("2d"),
-    width = 400,
-    height = 800;
+  grphix = canvas.getContext("2d"),
+  width = 400,
+  height = 800;
 
-var player = new Object('Jungle Asset Pack/Character/sprites/idle.gif', 100, 100, 19, 34); //char model + position
-var plat1 = new Object('Assets/platform1.png', 0, 750, 50, 20); // play model + position
+// Gamestate variables
+var player = new Object('Jungle Asset Pack/Character/sprites/idle.gif', (width / 2), 744, 19, 34); //char model + position
+var platXBot = new Object('Assets/platXBot.png', 0, 780, 400, 20); // bot plat position
+var platXTop = new Object('Assets/platXTop.png', 0, 0, 400, 20); // top
+
+// TODO clean this into a array
+var platYL = new Object('Assets/platY.png', 0, 0, 20, 800); // left
+var platYR = new Object('Assets/platY.png', 380, 0, 20, 800); // right
+var platLA = new Object('Assets/platD.png', 20, 680, 200, 20);
+var platRA = new Object('Assets/platD.png', 185, 580, 200, 20);
+var platLB = new Object('Assets/platD.png', 20, 480, 200, 20);
+var platRB = new Object('Assets/platD.png', 185, 380, 200, 20);
+var platLC = new Object('Assets/platD.png', 20, 280, 200, 20);
+var platRC = new Object('Assets/platD.png', 185, 180, 200, 20);
+
+// World physics variables
 var isLeft = false; // defaults for collison
 var isRight = false; // defaults for collison
 var isSpace = false;
@@ -28,8 +42,6 @@ function keyUp(e) {
 
 }
 
-
-
 // Main Loop
 mainLoop();
 
@@ -45,23 +57,69 @@ function mainLoop() {
 
   if (player.Velocity_Y < player.Gravity) player.Velocity_Y += player.Weight; // falling effect
 
-  if (player.isColliding(plat1) && (player.Y + player.Height) < (plat1.Y + player.Velocity_Y)) {
-    player.Y = plat1.Y - player.Height;
+  if (player.isColliding(platXBot) && (player.Y + player.Height) < (platXBot.Y + player.Velocity_Y)) {
+    player.Y = platXBot.Y - player.Height;
     player.Velocity_Y = 0; // if player collides then stop
   }
+  // TODO use a loop here
+  // platLA collision
+  if (player.isColliding(platLA) && (player.Y + player.Height) < (platLA.Y + player.Velocity_Y)) {
+    player.Y = platLA.Y - player.Height;
+    player.Velocity_Y = 0; // if player collides then stop
+  }
+  // platRA collision
+  if (player.isColliding(platRA) && (player.Y + player.Height) < (platRA.Y + player.Velocity_Y)) {
+    player.Y = platRA.Y - player.Height;
+    player.Velocity_Y = 0; // if player collides then stop
+  }
+  // platLB collision
+  if (player.isColliding(platLB) && (player.Y + player.Height) < (platLB.Y + player.Velocity_Y)) {
+    player.Y = platLB.Y - player.Height;
+    player.Velocity_Y = 0; // if player collides then stop
+  }
+  // platRB collision
+  if (player.isColliding(platRB) && (player.Y + player.Height) < (platRB.Y + player.Velocity_Y)) {
+    player.Y = platRB.Y - player.Height;
+    player.Velocity_Y = 0; // if player collides then stop
+  }
+  // platLC collision
+  if (player.isColliding(platLC) && (player.Y + player.Height) < (platLC.Y + player.Velocity_Y)) {
+    player.Y = platLC.Y - player.Height;
+    player.Velocity_Y = 0; // if player collides then stop
+  }
+  // platRC collision
+  if (player.isColliding(platRC) && (player.Y + player.Height) < (platRC.Y + player.Velocity_Y)) {
+    player.Y = platRC.Y - player.Height;
+    player.Velocity_Y = 0; // if player collides then stop
+  }
+  // Left Wall + Right wall collision
+  if (player.isColliding(platYL) || player.isColliding(platYR)) player.Velocity_X = 0;
 
   if (isSpace && player.Velocity_Y === 0) { // jumping mechanism
-    player.Velocity_Y = -5;
+    player.Velocity_Y = -4.5;
   }
-  
+
   // Post variable adjustments
 
   // Rendering
   grphix.clearRect(0, 0, gameBoard.width, gameBoard.height); // refreshs screen so graphics dont pile on
   grphix.drawImage(player.Sprite, player.X, player.Y); // sets player position
-  grphix.drawImage(plat1.Sprite, plat1.X, plat1.Y);
+  grphix.drawImage(platXBot.Sprite, platXBot.X, platXBot.Y); // bot platform
+  grphix.drawImage(platXTop.Sprite, platXTop.X, platXTop.Y); // top platform
 
-  setTimeout(mainLoop, 1000/60); // 60s refresh rate
+  // TODO loop
+  grphix.drawImage(platYR.Sprite, platYR.X, platYR.Y); // right wall
+  grphix.drawImage(platYL.Sprite, platYL.X, platYL.Y); // left wall
+  grphix.drawImage(platLA.Sprite, platLA.X, platLA.Y);
+  grphix.drawImage(platRA.Sprite, platRA.X, platRA.Y);
+  grphix.drawImage(platLB.Sprite, platLB.X, platLB.Y);
+  grphix.drawImage(platRB.Sprite, platRB.X, platRB.Y);
+  grphix.drawImage(platLC.Sprite, platLC.X, platLC.Y);
+  grphix.drawImage(platRC.Sprite, platRC.X, platRC.Y);
+
+
+
+  setTimeout(mainLoop, 1000 / 60); // 60s refresh rate
 }
 
 // object class
