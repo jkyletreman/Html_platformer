@@ -63,6 +63,7 @@ function mainLoop() {
     player.Y = platXBot.Y - player.Height;
     player.Velocity_Y = 0; // if player collides then stop
   }
+  
   // TODO use a loop here
   // platEnd collision
   if (player.isColliding(platEnd) && (player.Y + player.Height) < (platEnd.Y + player.Velocity_Y)) {
@@ -101,15 +102,14 @@ function mainLoop() {
   }
 
   // Left Wall + Right wall collision
-  if (player.isColliding(platYL)) player.Velocity_X = .1;
-  if (player.isColliding(platYR)) player.Velocity_X = -.1;
+  if (player.isColliding(platYL)) player.Velocity_X = 0.1;
+  if (player.isColliding(platYR)) player.Velocity_X = -0.1;
 
   // End State Collision
-
   if (player.isColliding(door)) {
-    let end = document.querySelector('endScreenArea');
-    end.className = 'popup'
-  }
+    var element = document.getElementById("gameOver");
+    element.classList.add("gameScreenArea2");
+}
 
   // Jump
   if (isSpace && player.Velocity_Y === 0) {
@@ -163,7 +163,5 @@ function Object(img, x, y, width, height) {
     if (this.Y > obj.Y + obj.Height) return false; // top
     if (this.Y + this.Height < obj.Y) return false; // bottom
     return true;
-
-
   }
 }
