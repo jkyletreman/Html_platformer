@@ -2,11 +2,13 @@ body {
   background: rgb(39, 43, 52)
 }
 
-canvas {
-  /*background: rgb(65, 61, 61);*/
-  /*background-image: url('./Jungle Asset Pack/Jungle tileset/jungle tileset.png');*/
-  display: block;
-  margin: 0 auto;
+h1 {
+  text-align: center;
+}
+
+h3 {
+  color: white;
+  text-align: center;
 }
 
 .gameScreenArea {
@@ -16,5 +18,11 @@ canvas {
 .gameScreenArea2 {
   display: block;
   text-align: center;
+}
 
+canvas {
+  /*background: rgb(65, 61, 61);*/
+  /*background-image: url('./Jungle Asset Pack/Jungle tileset/jungle tileset.png');*/
+  display: block;
+  margin: 0 auto;
 }

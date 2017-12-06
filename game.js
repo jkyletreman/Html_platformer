@@ -1,39 +1,44 @@
-//Variables
+//variable
 
-var gameBoard = document.getElementById("canvas"),
+let gameBoard = document.getElementById("canvas"),
   grphix = canvas.getContext("2d"),
   width = 400,
   height = 800;
 
-// Gamestate variables
-var player = new Object('Jungle Asset Pack/Character/sprites/idle.gif', (width / 2), 744, 19, 34); //char model + position
-var platXBot = new Object('Assets/platXBot.png', 0, 780, 400, 20); // bot plat position
-var platXTop = new Object('Assets/platXTop.png', 0, 0, 400, 20); // top
-var platYL = new Object('Assets/platY.png', 0, 0, 20, 800); // left
-var platYR = new Object('Assets/platY.png', 380, 0, 20, 800); // right
-var platEnd = new Object('Assets/platE.png', 100, 100, 200, 20); // end platform
-var door = new Object('Assets/Door.png', 200, 50, 35, 50);
+// Gamestate variable
+let player = new Object('Jungle Asset Pack/Character/sprites/idle.gif', (width / 2), 744, 19, 34); //char model + position
+let platXBot = new Object('Assets/platXBot.png', 0, 780, 400, 20); // bot plat position
+let platXTop = new Object('Assets/platXTop.png', 0, 0, 400, 20); // top
+let platYL = new Object('Assets/platY.png', 0, 0, 20, 800); // left
+let platYR = new Object('Assets/platY.png', 380, 0, 20, 800); // right
+let platEnd = new Object('Assets/platE.png', 100, 100, 200, 20); // end platform
+let door = new Object('Assets/Door.png', 200, 50, 35, 50);
+let jumpCount = 0;
 
 // TODO clean this into a array
-var platLA = new Object('Assets/platD.png', 20, 680, 200, 20);
-var platRA = new Object('Assets/platD.png', 185, 580, 200, 20);
-var platLB = new Object('Assets/platD.png', 20, 480, 200, 20);
-var platRB = new Object('Assets/platD.png', 185, 380, 200, 20);
-var platLC = new Object('Assets/platD.png', 20, 280, 200, 20);
-var platRC = new Object('Assets/platD.png', 185, 180, 200, 20);
+let platLA = new Object('Assets/platD.png', 20, 680, 200, 20);
+let platRA = new Object('Assets/platD.png', 185, 580, 200, 20);
+let platLB = new Object('Assets/platD.png', 20, 480, 200, 20);
+let platRB = new Object('Assets/platD.png', 185, 380, 200, 20);
+let platLC = new Object('Assets/platD.png', 20, 280, 200, 20);
+let platRC = new Object('Assets/platD.png', 185, 180, 200, 20);
 
-// World physics variables
-var isLeft = false; // defaults for collison
-var isRight = false; // defaults for collison
-var isSpace = false;
+// World physics variable
+let isLeft = false; // defaults for collison
+let isRight = false; // defaults for collison
+let isSpace = false;
 player.Gravity = 20;
 player.Weight = 0.1;
 
 // Events
+
 function keyDown(e) {
   if (String.fromCharCode(e.keyCode) === '%') isLeft = true; // player left
   if (String.fromCharCode(e.keyCode) === "'") isRight = true; // player right
-  if (String.fromCharCode(e.keyCode) === " ") isSpace = true; // player up
+  if (String.fromCharCode(e.keyCode) === " ") {
+    isSpace = true; // player up
+    jumpCount++;
+  }
 
 }
 
@@ -48,6 +53,11 @@ function keyUp(e) {
 mainLoop();
 
 function mainLoop() {
+  //Display Previous score
+  let previousScore = document.getElementById('previousScore');
+  let oldScore = localStorage.getItem('jumpCount')
+  previousScore.innerHTML = oldScore;
+
   // Pre variable adjustments
   player.X += player.Velocity_X; // amt move left
   player.Y += player.Velocity_Y; // amt move right
@@ -63,7 +73,7 @@ function mainLoop() {
     player.Y = platXBot.Y - player.Height;
     player.Velocity_Y = 0; // if player collides then stop
   }
-  
+
   // TODO use a loop here
   // platEnd collision
   if (player.isColliding(platEnd) && (player.Y + player.Height) < (platEnd.Y + player.Velocity_Y)) {
@@ -107,8 +117,11 @@ function mainLoop() {
 
   // End State Collision
   if (player.isColliding(door)) {
-    var element = document.getElementById("gameOver");
+    // display GameOver
+    let element = document.getElementById("gameOver");
     element.classList.add("gameScreenArea2");
+    // Local Storage for count
+    localStorage.setItem('jumpCount', JSON.stringify(jumpCount))
 }
 
   // Jump
