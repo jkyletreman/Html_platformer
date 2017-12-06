@@ -99,7 +99,8 @@ function mainLoop() {
     player.Velocity_Y = 0; // if player collides then stop
   }
   // Left Wall + Right wall collision
-  if (player.isColliding(platYL) || player.isColliding(platYR)) player.Velocity_X = 0;
+  if (player.isColliding(platYL)) player.Velocity_X = .1;
+  if (player.isColliding(platYR)) player.Velocity_X = -.1;
 
   if (isSpace && player.Velocity_Y === 0) { // jumping mechanism
     player.Velocity_Y = -4.5;
