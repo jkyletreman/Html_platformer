@@ -6,18 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel='stylesheet' href="./main.css">
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.5/howler.js"></script>
+
   <title>Plat</title>
 </head>
 
 <body onkeydown="keyDown(event)" onkeyup="keyUp(event)">
-  <h1>Game Title</h1>
+  <h1 id='click'>Jungle Man</h1>
   <h3 id='previousScore'></h3>
   <div id="gameOver" class='gameScreenArea'>
     <h2>GAME OVER</h2>
-    <p id='score'></p>
+    <h4 id='score'></h4>
   </div>
 
   <canvas id="canvas" width="400" height="800"></canvas>
+
+  <!-- <span>Music</span>
+  <input type='checkbox' id='musicCheck'>  -->
 
 
   <script src="./game.js"></script>

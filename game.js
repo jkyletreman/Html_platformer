@@ -6,22 +6,23 @@ let gameBoard = document.getElementById("canvas"),
   height = 800;
 
 // Gamestate variable
-let player = new Object('Jungle Asset Pack/Character/sprites/idle.gif', (width / 2), 744, 19, 34); //char model + position
-let platXBot = new Object('Assets/platXBot.png', 0, 780, 400, 20); // bot plat position
-let platXTop = new Object('Assets/platXTop.png', 0, 0, 400, 20); // top
-let platYL = new Object('Assets/platY.png', 0, 0, 20, 800); // left
-let platYR = new Object('Assets/platY.png', 380, 0, 20, 800); // right
-let platEnd = new Object('Assets/platE.png', 100, 100, 200, 20); // end platform
-let door = new Object('Assets/Door.png', 200, 50, 35, 50);
+let player = new object('Jungle Asset Pack/Character/sprites/idle.gif', (width / 2), 744, 19, 34); //char model + position
+let platXBot = new object('Assets/platXBot.png', 0, 780, 400, 20); // bot plat position
+let platXTop = new object('Assets/platXTop.png', 0, 0, 400, 20); // top
+let platYL = new object('Assets/platY.png', 0, 0, 20, 800); // left
+let platYR = new object('Assets/platY.png', 380, 0, 20, 800); // right
+let platEnd = new object('Assets/platE.png', 100, 100, 200, 20); // end platform
+let door = new object('Assets/Door.png', 200, 50, 35, 50);
 let jumpCount = 0;
 
 // TODO clean this into a array
-let platLA = new Object('Assets/platD.png', 20, 680, 200, 20);
-let platRA = new Object('Assets/platD.png', 185, 580, 200, 20);
-let platLB = new Object('Assets/platD.png', 20, 480, 200, 20);
-let platRB = new Object('Assets/platD.png', 185, 380, 200, 20);
-let platLC = new Object('Assets/platD.png', 20, 280, 200, 20);
-let platRC = new Object('Assets/platD.png', 185, 180, 200, 20);
+let platLA = new object('Assets/platD.png', 20, 680, 200, 20);
+let platRA = new object('Assets/platD.png', 185, 580, 200, 20);
+let platLB = new object('Assets/platD.png', 20, 480, 200, 20);
+let platRB = new object('Assets/platD.png', 185, 380, 200, 20);
+let platLC = new object('Assets/platD.png', 20, 280, 200, 20);
+let platRC = new object('Assets/platD.png', 185, 180, 200, 20);
+let platTest = new object
 
 // World physics variable
 let isLeft = false; // defaults for collison
@@ -54,6 +55,7 @@ mainLoop();
 
 function mainLoop() {
   //Display Previous score
+  localStorage.removeItem(jumpCount);
   let previousScore = document.getElementById('previousScore');
   let oldScore = localStorage.getItem('jumpCount')
   previousScore.innerHTML = oldScore;
@@ -122,7 +124,7 @@ function mainLoop() {
     element.classList.add("gameScreenArea2");
     // Local Storage for count
     localStorage.setItem('jumpCount', JSON.stringify(jumpCount))
-}
+  }
 
   // Jump
   if (isSpace && player.Velocity_Y === 0) {
@@ -156,7 +158,7 @@ function mainLoop() {
 }
 
 // object class
-function Object(img, x, y, width, height) {
+function object(img, x, y, width, height) {
   this.Sprite = new Image();
   this.Sprite.src = img;
   this.X = x;
@@ -178,3 +180,60 @@ function Object(img, x, y, width, height) {
     return true;
   }
 }
+
+// David Sound Addition
+var sound = new Howl({
+  src: ['https://k003.kiwi6.com/hotlink/qpw7gh2m2m/jump.mp3'],
+  volume: 0.05,
+  loop: false,
+});
+var theme = new Howl({
+  src: ['https://k003.kiwi6.com/hotlink/k1yu2y20on/playform.mp3'],
+  volume: 0.2,
+  loop: true,
+});
+var move = new Howl({
+  src: ['http://k003.kiwi6.com/hotlink/6nvcv446vj/move.mp3'],
+  volume: 0.03,
+  loop: false,
+});
+
+function jumpSound(e) {
+  if (e.keyCode == 32) {
+    sound.play();
+  }
+}
+
+function stopSound(e) {
+  if (e.keyCode == 77) {
+    theme.stop();
+  }
+}
+
+function moveSound(e) {
+  if (e.keyCode == 39) {
+    move.play();
+  }
+  if (e.keyCode == 37) {
+    move.play();
+  }
+}
+
+document.getElementById('click').addEventListener("click", function() {
+  sound.play();
+})
+
+// document.querySelector('#music').addEventListener('change', function(e) {
+//   if (e.target.checked) {
+//     theme.play();
+//   } else {
+//     theme.stop();
+//   }
+// }
+
+document.body.addEventListener('keydown', jumpSound)
+document.body.addEventListener('keydown', moveSound)
+document.body.addEventListener('keydown', stopSound)
+document.body.addEventListener('click', function() {
+  theme.play()
+})
