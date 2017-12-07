@@ -11,8 +11,8 @@ let platXBot = new object('Assets/platXBot.png', 0, 780, 400, 20); // bot plat p
 let platXTop = new object('Assets/platXTop.png', 0, 0, 400, 20); // top
 let platYL = new object('Assets/platY.png', 0, 0, 20, 800); // left
 let platYR = new object('Assets/platY.png', 380, 0, 20, 800); // right
-let platEnd = new object('Assets/platE.png', 100, 100, 200, 20); // end platform
-let door = new object('Assets/Door.png', 200, 50, 35, 50);
+let platEnd = new object('Assets/platD.png', 100, 100, 200, 20); // end platform
+let door = new object('Assets/Door.png', 185, 50, 35, 50);
 let jumpCount = 0;
 
 // TODO clean this into a array
