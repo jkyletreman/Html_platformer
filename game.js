@@ -22,7 +22,6 @@ let platLB = new object('Assets/platD.png', 20, 480, 200, 20);
 let platRB = new object('Assets/platD.png', 185, 380, 200, 20);
 let platLC = new object('Assets/platD.png', 20, 280, 200, 20);
 let platRC = new object('Assets/platD.png', 185, 180, 200, 20);
-let platTest = new object
 
 // World physics variable
 let isLeft = false; // defaults for collison
@@ -40,14 +39,12 @@ function keyDown(e) {
     isSpace = true; // player up
     jumpCount++;
   }
-
 }
 
 function keyUp(e) {
   if (String.fromCharCode(e.keyCode) === '%') isLeft = false; // player left
   if (String.fromCharCode(e.keyCode) === "'") isRight = false; // player right
   if (String.fromCharCode(e.keyCode) === " ") isSpace = false; // player up
-
 }
 
 // Main Loop
@@ -76,42 +73,64 @@ function mainLoop() {
     player.Velocity_Y = 0; // if player collides then stop
   }
 
-  // TODO use a loop here
+
+  // TODO use a loop here | TODO sticky collision bottom platforms (commented out ifs)
   // platEnd collision
   if (player.isColliding(platEnd) && (player.Y + player.Height) < (platEnd.Y + player.Velocity_Y)) {
     player.Y = platEnd.Y - player.Height;
     player.Velocity_Y = 0; // if player collides then stop
   }
+  // if (player.isColliding(platEnd) && (player.Y + player.Height) > ((platEnd.Y - platEnd.Height) - player.Velocity_Y)) {
+  //   player.Velocity_Y = 0.1;
+  // }
   // platLA collision
   if (player.isColliding(platLA) && (player.Y + player.Height) < (platLA.Y + player.Velocity_Y)) {
     player.Y = platLA.Y - player.Height;
     player.Velocity_Y = 0; // if player collides then stop
   }
+  // if (player.isColliding(platLA) && (player.Y + player.Height) > ((platLA.Y - platLA.Height) - player.Velocity_Y)) {
+  //   player.Velocity_Y = 0.1;
+  // }
   // platRA collision
   if (player.isColliding(platRA) && (player.Y + player.Height) < (platRA.Y + player.Velocity_Y)) {
     player.Y = platRA.Y - player.Height;
     player.Velocity_Y = 0; // if player collides then stop
   }
+  // if (player.isColliding(platRA) && (player.Y + player.Height) > ((platRA.Y - platRA.Height) - player.Velocity_Y)) {
+  //   player.Velocity_Y = 0.1;
+  // }
   // platLB collision
   if (player.isColliding(platLB) && (player.Y + player.Height) < (platLB.Y + player.Velocity_Y)) {
     player.Y = platLB.Y - player.Height;
     player.Velocity_Y = 0; // if player collides then stop
   }
+  // if (player.isColliding(platLB) && (player.Y + player.Height) > ((platLB.Y - platLB.Height) - player.Velocity_Y)) {
+  //   player.Velocity_Y = 0.1;
+  // }
   // platRB collision
   if (player.isColliding(platRB) && (player.Y + player.Height) < (platRB.Y + player.Velocity_Y)) {
     player.Y = platRB.Y - player.Height;
     player.Velocity_Y = 0; // if player collides then stop
   }
+  // if (player.isColliding(platRB) && (player.Y + player.Height) > ((platRB.Y - platRB.Height) - player.Velocity_Y)) {
+  //   player.Velocity_Y = 0.1;
+  // }
   // platLC collision
   if (player.isColliding(platLC) && (player.Y + player.Height) < (platLC.Y + player.Velocity_Y)) {
     player.Y = platLC.Y - player.Height;
     player.Velocity_Y = 0; // if player collides then stop
   }
+  // if (player.isColliding(platLC) && (player.Y + player.Height) > ((platLC.Y - platLC.Height) - player.Velocity_Y)) {
+  //   player.Velocity_Y = 0.1;
+  // }
   // platRC collision
   if (player.isColliding(platRC) && (player.Y + player.Height) < (platRC.Y + player.Velocity_Y)) {
     player.Y = platRC.Y - player.Height;
     player.Velocity_Y = 0; // if player collides then stop
   }
+  // if (player.isColliding(platRC) && (player.Y + player.Height) > ((platRC.Y - platRC.Height) - player.Velocity_Y)) {
+  //   player.Velocity_Y = 0.1;
+  // }
 
   // Left Wall + Right wall collision
   if (player.isColliding(platYL)) player.Velocity_X = 0.1;
@@ -150,6 +169,7 @@ function mainLoop() {
   grphix.drawImage(platLC.Sprite, platLC.X, platLC.Y);
   grphix.drawImage(platRC.Sprite, platRC.X, platRC.Y);
   grphix.drawImage(door.Sprite, door.X, door.Y);
+
 
 
 
